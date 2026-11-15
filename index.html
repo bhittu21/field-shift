@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="src/styles/layout.css">
   <link rel="stylesheet" href="src/styles/charts.css">
   <link rel="stylesheet" href="src/styles/rotation.css">
+  <link rel="stylesheet" href="src/styles/sources.css">
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skip"></a>
@@ -154,7 +155,48 @@
       </div>
     </section>
 
-    <!-- Further sections (climate, rotation, sources, messaging, about) are added by later milestones. -->
+    <section class="section" id="sources" data-nav="nav.sources" aria-labelledby="src-title">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="src.eyebrow"></span>
+          <h2 id="src-title" data-i18n="src.title"></h2>
+          <p class="section__lead" data-i18n="src.lead"></p>
+        </div>
+        <div class="notice" role="note"><span aria-hidden="true">!</span><p data-i18n="src.honesty"></p></div>
+        <div class="notice notice--info" role="note" style="margin-top:var(--s-3)"><span aria-hidden="true">i</span><div><p><strong data-i18n="src.usTitle"></strong></p><p data-i18n="src.usText"></p></div></div>
+        <div id="sources-list" data-section-host="sources" style="margin-top:var(--s-5)"></div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="messages" data-nav="nav.messages" aria-labelledby="msg-title">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="msg.eyebrow"></span>
+          <h2 id="msg-title" data-i18n="msg.title"></h2>
+          <p class="section__lead" data-i18n="msg.lead"></p>
+          <p class="cluster"><span class="badge badge--planned" data-i18n="msg.upcoming"></span><span class="small muted" data-i18n="msg.notice"></span></p>
+        </div>
+        <div class="msg-grid" id="msg-grid" data-section-host="messages"></div>
+      </div>
+    </section>
+
+    <section class="section" id="about" data-nav="nav.about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="about.eyebrow"></span>
+          <h2 id="about-title" data-i18n="about.title"></h2>
+        </div>
+        <div class="about-grid">
+          <article class="card"><h3 data-i18n="about.mission.title"></h3><p data-i18n="about.mission.text"></p></article>
+          <article class="card"><h3 data-i18n="about.challenge.title"></h3><p data-i18n="about.challenge.text"></p></article>
+          <article class="card"><h3 data-i18n="about.data.title"></h3><p data-i18n="about.data.text"></p></article>
+          <article class="card"><h3 data-i18n="about.limits.title"></h3><p data-i18n="about.limits.text"></p></article>
+          <article class="card"><h3 data-i18n="about.expert.title"></h3><p data-i18n="about.expert.text"></p></article>
+          <article class="card"><h3 data-i18n="about.tech.title"></h3><p data-i18n="about.tech.text"></p></article>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer on-dark">
@@ -178,12 +220,15 @@
   <script src="src/translations/common.js"></script>
   <script src="src/translations/climate.js"></script>
   <script src="src/translations/rotation.js"></script>
+  <script src="src/translations/sources.js"></script>
   <script src="src/components/charts.js"></script>
   <script src="src/utils/scoring.js"></script>
   <script src="src/app.js"></script>
   <script src="src/sections/dashboard.js"></script>
   <script src="src/sections/climate.js"></script>
   <script src="src/sections/rotation.js"></script>
+  <script src="src/sections/sources.js"></script>
+  <script src="src/sections/messages.js"></script>
   <script src="src/sections/footer.js"></script>
 </body>
 </html>

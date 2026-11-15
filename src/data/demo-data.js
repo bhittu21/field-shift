@@ -160,14 +160,14 @@
    */
   var SOURCES = [
     { id: 'smap', kind: 'nasa', status: 'demo', shows: ['soil', 'water'], url: 'https://smap.jpl.nasa.gov/' },
-    { id: 'gpm', kind: 'nasa', status: 'demo', shows: ['rain'], url: 'https://gpm.nasa.gov/data/imerg' },
+    { id: 'gpm', kind: 'nasa', status: 'demo', shows: ['rain'], url: 'https://gpm.nasa.gov/' },
     { id: 'power', kind: 'nasa', status: 'demo', shows: ['temp'], url: 'https://power.larc.nasa.gov/' },
     { id: 'modis', kind: 'nasa', status: 'demo', shows: ['ndvi'], url: 'https://modis.gsfc.nasa.gov/' },
-    { id: 'srtm', kind: 'nasa', status: 'planned', shows: [], url: 'https://www.earthdata.nasa.gov/data/instruments/srtm' },
+    { id: 'srtm', kind: 'nasa', status: 'planned', shows: [], url: 'https://www2.jpl.nasa.gov/srtm/' },
     { id: 'ecostress', kind: 'nasa', status: 'planned', shows: [], url: 'https://ecostress.jpl.nasa.gov/' },
     { id: 'grace', kind: 'nasa', status: 'notConnected', shows: [], url: 'https://grace.jpl.nasa.gov/' },
-    { id: 'sentinel2', kind: 'partner', status: 'notConnected', shows: [], url: 'https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-2' },
-    { id: 'era5', kind: 'partner', status: 'notConnected', shows: [], url: 'https://www.ecmwf.int/en/forecasts/dataset/ecmwf-reanalysis-v5' },
+    { id: 'sentinel2', kind: 'partner', status: 'notConnected', shows: [], url: 'https://sentinels.copernicus.eu/' },
+    { id: 'era5', kind: 'partner', status: 'notConnected', shows: [], url: 'https://www.ecmwf.int/' },
     { id: 'localSoil', kind: 'future', status: 'notConnected', shows: [], url: '' }
   ];
 

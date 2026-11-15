@@ -74,3 +74,5 @@
 .footer__legal { margin-top: var(--s-5); padding-top: var(--s-4); border-top: 1px solid rgba(255, 255, 255, 0.2); font-size: 0.9rem; }
 
 .footer__title { font-size: 1.1rem; }
+
+@media (min-width: 960px) and (max-width: 1199px) { .site-nav a { padding: 8px 8px; font-size: 0.95rem; } .brand { font-size: 1.15rem; } }
