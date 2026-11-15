@@ -1,5 +1,6 @@
 """Render the page at the required widths in both languages; report horizontal overflow, console errors,
 and elements whose text overflows their box. Usage: python3 tests/screenshot.py [outdir]"""
+import pathlib
 import sys, json, subprocess, time, os
 from playwright.sync_api import sync_playwright
 
@@ -22,7 +23,7 @@ CHECK = """() => {
 }"""
 
 with sync_playwright() as p:
-    b = p.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox', '--allow-file-access-from-files'])
+    b = p.chromium.launch(executable_path=os.environ.get('CHROME_PATH') or ('/usr/bin/google-chrome' if os.path.exists('/usr/bin/google-chrome') else None), args=['--no-sandbox', '--allow-file-access-from-files'])
     problems = 0
     for lang in ['bn', 'en']:
         for w in WIDTHS:
@@ -32,7 +33,7 @@ with sync_playwright() as p:
             page.on('pageerror', lambda e: errs.append(str(e)))
             page.on('console', lambda m: errs.append(m.text) if m.type in ('error', 'warning') else None)
             page.add_init_script("localStorage.setItem('amarfoshol.lang','%s')" % lang)
-            page.goto('file://' + os.path.abspath('index.html'))
+            page.goto(pathlib.Path('index.html').resolve().as_uri())
             page.wait_for_timeout(400)
             r = page.evaluate(CHECK)
             ok = r['scrollW'] <= r['clientW'] and not r['overflow'] and not errs

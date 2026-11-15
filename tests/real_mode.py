@@ -1,13 +1,13 @@
 """Checks the UI wiring when real NASA POWER data is present. Uses a FAKE fixture (obvious numbers, e.g. 99 hot days):
 this verifies labelling and plumbing only, never real values. Run: python3 tests/real_mode.py"""
+import pathlib
 import os, re, sys, json
 from playwright.sync_api import sync_playwright
-URL = 'file://' + os.path.abspath('index.html')
+URL = pathlib.Path('index.html').resolve().as_uri()
 months = [10,10,20,50,150,300,350,320,250,120,20,5]
 def dist(base):
-    return {'meanTemp': {'old': base, 'recent': base + 1}, 'hotDays': {'old': 11, 'recent': 99}, 'rain': {'old': 2000, 'recent': 1900},
-            'onset': {'old': 150, 'recent': 160}, 'monthlyRain': {'old': months, 'recent': months}}
-FIXTURE = {'source': 'NASA POWER', 'retrievedAt': '2026-11-15', 'periods': {'old': [1991, 2005], 'recent': [2010, 2024]},
+    return {'meanTemp': base, 'hotDays': 99, 'rain': 1900, 'onset': 160, 'monthlyRain': months}
+FIXTURE = {'source': 'NASA POWER', 'retrievedAt': '2026-11-15', 'period': [2010, 2024],
            'definitions': {'hotC': 35, 'onsetMm': 60, 'onsetWindowDays': 7, 'onsetFromDayOfYear': 91},
            'districts': {d: dist(24) for d in ['dhaka','rajshahi','khulna','rangpur','barishal','sylhet']}}
 fails = []
@@ -16,11 +16,12 @@ def check(name, cond):
     if not cond: fails.append(name)
 
 with sync_playwright() as p:
-    b = p.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox'])
+    b = p.chromium.launch(executable_path=os.environ.get('CHROME_PATH') or ('/usr/bin/google-chrome' if os.path.exists('/usr/bin/google-chrome') else None), args=['--no-sandbox'])
     pg = b.new_page(viewport={'width': 1200, 'height': 900}); errs = []
     pg.on('pageerror', lambda e: errs.append(str(e)))
     pg.goto(URL)
-    check('placeholder file means demo mode', pg.evaluate("SC.hasRealData()") is False)
+    pg.evaluate("() => { SC.nasaPower = null; SC.update(); }")   # same state as the placeholder data file
+    check('null data means demo mode', pg.evaluate("SC.hasRealData()") is False)
     check('demo mode: hero says Demo Mode', 'ডেমো মোড' in pg.inner_text('#home .badge'))
     check('demo mode: no verified badge anywhere', pg.locator('#climate .badge--verified, #sources .badge--verified').count() == 0)
     pg.evaluate("f => { SC.nasaPower = f; SC.update(); }", FIXTURE)
@@ -37,7 +38,12 @@ with sync_playwright() as p:
     badges = pg.evaluate("[...document.querySelectorAll('#climate-shift figure')].map(f => [f.querySelector('figcaption').id.replace('-cap',''), f.querySelector('.chart__badge .badge').className.includes('verified')])")
     expect = {'ch-hot': True, 'ch-onset': True, 'ch-rain': True, 'ch-soil': False, 'ch-veg': False, 'ch-win': False}
     check('chart provenance: hot/onset/rain real, soil/veg/window demo', dict((k, v) for k, v in badges) == expect)
-    check('climate notice states what is still synthetic', 'কৃত্রিম' in pg.inner_text('#climate .notice'))
+    then_bars = pg.evaluate("Object.fromEntries(['ch-hot','ch-onset','ch-rain','ch-soil'].map(id => [id, document.getElementById(id + '-cap').closest('figure').querySelectorAll('.cbar__fill--then').length]))")
+    check('real charts show averages only (no then bars); demo soil chart still compares', then_bars['ch-hot'] == 0 and then_bars['ch-onset'] == 0 and then_bars['ch-rain'] == 0 and then_bars['ch-soil'] > 0)
+    check('real cards say average, no then-vs-now change line', all('২০১০' in pg.locator('#climate-cards article').nth(i).inner_text() and 'আগের সময়ের তুলনায়' not in pg.locator('#climate-cards article').nth(i).inner_text() for i in (0, 1)))
+    check('demo cards still show a change line', 'আগের সময়ের তুলনায়' in pg.locator('#climate-cards article').nth(2).inner_text())
+    check('rotation scoring unaffected by real data (heat uses demo series)', pg.evaluate("SC.provider.climate('dhaka').hotDays.recent") == pg.evaluate("SC.data.DISTRICTS.dhaka.hotDays.recent"))
+    check('climate notice states what is still synthetic and why there is no comparison', 'কৃত্রিম' in pg.inner_text('#climate .notice') and 'তুলনা দেখানো হয়নি' in pg.inner_text('#climate .notice'))
     check('power source card is verified, gpm is planned', pg.evaluate("""() => { const t = id => document.querySelector('#src-' + id).closest('article').querySelector('.badge').className; return t('power').includes('verified') && t('gpm').includes('planned') && t('smap').includes('demo'); }"""))
     check('footer shows verified NASA POWER file, not live', 'লাইভ সংযোগ নয়' in pg.inner_text('#footer-status') and pg.locator('#footer-status .badge--verified').count() == 1)
     check('database still reported not connected', 'ডেটাবেস' in pg.inner_text('#footer-status') and 'সংযুক্ত নেই' in pg.inner_text('#footer-status'))

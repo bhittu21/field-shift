@@ -36,10 +36,12 @@
   function translateStatic() {
     var real = SC.hasRealData();
     var date = real ? SC.isoDate(SC.nasaPower.retrievedAt) : '';
+    var p = (real && SC.nasaPower.period) || [];
+    var range = real ? SC.t('period.recentRange', { from: SC.num(p[0]), to: SC.num(p[1]) }) : '';
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       /* data-i18n-real swaps in wording that is only true once real NASA POWER data is loaded. */
       var key = (real && el.getAttribute('data-i18n-real')) || el.getAttribute('data-i18n');
-      el.textContent = SC.t(key, { date: date });
+      el.textContent = SC.t(key, { date: date, range: range });
     });
     document.querySelectorAll('[data-i18n-attr]').forEach(function (el) {
       var spec = (real && el.getAttribute('data-i18n-attr-real')) || el.getAttribute('data-i18n-attr');

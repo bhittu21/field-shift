@@ -6,7 +6,11 @@ No API key, no account, standard library only. Needs an internet connection (abo
 
     python scripts/fetch_nasa_power.py
 
-What it produces (per district), for two periods (1991-2005 and 2010-2024):
+What it produces (per district): AVERAGES FOR 2010-2024 ONLY. There is deliberately no then-vs-now comparison.
+When checked on 2026-11-15, the POWER daily series for these points was not consistent over time: 1991-1996 rain was
+roughly a third of later years with much hotter maxima, and rain jumped again around 2016. Those steps look like
+changes in the underlying data sources, not climate, so comparing periods would mislead. The 2010-2024 average
+still spans the ~2016 step, so treat the values as rough estimates for one grid cell, not station measurements.
   - mean temperature        (T2M, daily mean air temperature at 2 m, deg C)
   - very hot days per year  (days with T2M_MAX >= 35 deg C)
   - rain per year and per month (PRECTOTCORR, corrected precipitation, mm/day summed)
@@ -34,9 +38,7 @@ POINTS = {  # approximate district-centre points (lat, lon)
     "barishal": (22.70, 90.37),
     "sylhet": (24.89, 91.87),
 }
-START_YEAR, END_YEAR = 1991, 2024
-OLD = (1991, 2005)
-RECENT = (2010, 2024)
+PERIOD = (2010, 2024)  # averages only; see the module docstring for why there is no earlier period
 HOT_C = 35.0          # deg C, applied to T2M_MAX
 ONSET_MM = 60.0       # mm in a trailing window
 ONSET_WINDOW = 7      # days
@@ -51,8 +53,8 @@ def fetch_daily(lat, lon, retries=4):
         "community": "AG",
         "longitude": lon,
         "latitude": lat,
-        "start": "%d0101" % START_YEAR,
-        "end": "%d1231" % END_YEAR,
+        "start": "%d0101" % PERIOD[0],
+        "end": "%d1231" % PERIOD[1],
         "format": "JSON",
     })
     last = None
@@ -72,7 +74,7 @@ def _val(series, key):
 
 
 def compute(params):
-    """params: {'T2M': {YYYYMMDD: v}, 'T2M_MAX': {...}, 'PRECTOTCORR': {...}} -> per-period summary."""
+    """params: {'T2M': {YYYYMMDD: v}, 'T2M_MAX': {...}, 'PRECTOTCORR': {...}} -> averages over PERIOD."""
     t2m, tmax, rain = params["T2M"], params["T2M_MAX"], params["PRECTOTCORR"]
 
     def days_of(year):
@@ -107,17 +109,10 @@ def compute(params):
             "hotDays": round(statistics.fmean(hot_counts)),
             "rain": round(statistics.fmean(annual)),
             "monthlyRain": [round(statistics.fmean(m)) for m in monthly],
-            "onset": round(statistics.median(onsets)),
+            "onset": round(statistics.median(onsets)) if onsets else None,
         }
 
-    old, recent = summarise(*OLD), summarise(*RECENT)
-    return {
-        "meanTemp": {"old": old["meanTemp"], "recent": recent["meanTemp"]},
-        "hotDays": {"old": old["hotDays"], "recent": recent["hotDays"]},
-        "rain": {"old": old["rain"], "recent": recent["rain"]},
-        "onset": {"old": old["onset"], "recent": recent["onset"]},
-        "monthlyRain": {"old": old["monthlyRain"], "recent": recent["monthlyRain"]},
-    }
+    return summarise(*PERIOD)
 
 
 def main():
@@ -138,7 +133,9 @@ def main():
                        "PRECTOTCORR": "corrected precipitation"},
         "api": api_info,
         "retrievedAt": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d"),
-        "periods": {"old": list(OLD), "recent": list(RECENT)},
+        "period": list(PERIOD),
+        "note": "Averages for the period only. Earlier years of this record were not consistent enough for a "
+                "fair then-vs-now comparison, so none is given.",
         "definitions": {"hotC": HOT_C, "onsetMm": ONSET_MM, "onsetWindowDays": ONSET_WINDOW,
                         "onsetFromDayOfYear": ONSET_FROM_DOY},
         "districts": districts,

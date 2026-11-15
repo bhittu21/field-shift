@@ -3,8 +3,9 @@
 **Bilingual (Bangla / English) crop-rotation and climate-shift decision-support demo for farmers in Bangladesh.**
 Built for the NASA Space Apps Challenge 2026 (challenge theme: adapting farms with NASA data).
 
-> **Demo mode.** Every number in this app is synthetic and illustrative. Nothing is retrieved from NASA or any other source,
-> there are no research citations, and the rotation scoring is a demonstration heuristic, not a validated model.
+> **Partly real data.** Temperature, very hot days, rainfall and heavy-rain onset are 2010-2024 averages from a NASA POWER
+> file fetched once (see below); everything else is synthetic and illustrative. There are no research citations, and the
+> rotation scoring is a demonstration heuristic, not a validated model.
 > Amar Foshol supports farmer judgment. It does not replace local agricultural experts.
 
 ## Real data: NASA POWER (optional, run once)
@@ -15,7 +16,9 @@ The temperature and rainfall figures can come from the real NASA POWER daily poi
 python scripts/fetch_nasa_power.py
 ```
 
-This overwrites `src/data/nasa-power.js` with 1991-2005 vs 2010-2024 summaries for the six district points. Reload the page: the temperature, rain, hot-day and rain-onset cards then carry a "Verified" badge and the retrieval date.
+This overwrites `src/data/nasa-power.js` with **2010-2024 averages only** for the six district points. Reload the page: the temperature, rain, hot-day and rain-onset cards and charts then carry a "Verified" badge and the retrieval date, and show a single average instead of a then-vs-now comparison.
+
+Why no comparison: when checked on 2026-11-15, the POWER daily series at these points was not consistent over time. 1991-1996 rain was roughly a third of later years (Rajshahi 324-600 mm/yr) with far more hot days, and rain stepped up again around 2016. These look like changes in the underlying data sources rather than climate, so a "then vs now" built on them would mislead. The 2010-2024 average still spans the ~2016 step: treat values as rough estimates for one grid cell, not station measurements. The synthetic demo comparison (soil moisture, vegetation, planting window) is unchanged and labelled Demo.
 
 What stays synthetic (and is labelled so): soil moisture, vegetation (NDVI), planting windows and all crop-rotation scenarios. The site is a "partly real" prototype, not a live NASA feed: the data is a file fetched once, not a live connection. "Heavy-rain onset" and "hot day" (>= 35 C) are this project's own definitions, shown in the chart text.
 
@@ -28,10 +31,10 @@ Tests: `python3 tests/test_fetch_nasa_power.py` (offline), `python3 tests/real_m
   for the selected crop: example sequence, water demand, soil benefits, nitrogen-fixing potential, ground cover and erosion,
   pest-cycle diversity, income uncertainty, risks, missing information, evidence status, a comparison table and a "why is this shown" explanation.
 - **Farmer priorities:** multi-select (water, soil, erosion, income, vulnerability). Equal-weight demo scores update the comparison. No winner is declared.
-- **Climate Shift Explorer:** Then vs Now (1991-2005 vs 2010-2024) for six districts: temperature, hot days, rainfall (monthly), heavy-rain onset,
-  soil moisture, vegetation index, and planting-window shift for the chosen crop.
+- **Climate Shift Explorer:** for six districts: NASA POWER 2010-2024 averages for temperature, hot days, rainfall (monthly) and heavy-rain onset;
+  synthetic Then vs Now (1991-2005 vs 2010-2024) demo for soil moisture, vegetation index, and planting-window shift for the chosen crop.
 - **Data Sources:** SMAP, GPM/IMERG, POWER, MODIS/VIIRS/Landsat, SRTM, ECOSTRESS, GRACE/GRACE-FO, plus ESA Sentinel-2 and ECMWF ERA5 as partner resources.
-  Each card carries a status (Demo Data, Planned Integration, Not Connected, Verified Source). None is currently *Verified*.
+  Each card carries a status (Demo Data, Planned Integration, Not Connected, Verified Source). Only POWER is *Verified*, and only because its data file is present; it is not a live connection.
   U.S.-only datasets (Web Soil Survey, SSURGO, Cropland Data Layer, PRISM, NAIP, CoCoRaHS) are deliberately **not** used.
 - **WhatsApp / SMS mock-ups:** visual only. No message is sent, no service is connected.
 - **Bangla (default) and English**, switchable without reload, persisted in `localStorage`. Bangla numerals and month names in Bangla mode.

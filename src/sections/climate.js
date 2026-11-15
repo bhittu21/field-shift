@@ -23,6 +23,16 @@
     return '<p class="stat-card__change ' + cls + '">' + esc(text) + '<small>' + esc(SC.t('change.vs')) + '</small></p>';
   }
 
+  /* "2010–2024" for the real NASA POWER averaging period. */
+  function realRange() {
+    var p = (SC.nasaPower && SC.nasaPower.period) || [];
+    return SC.t('period.recentRange', { from: SC.num(p[0]), to: SC.num(p[1]) });
+  }
+  /* Replaces the change line on real-data cards: an average only, no then-vs-now claim. */
+  function avgHtml() {
+    return '<p class="stat-card__change change--neutral">' + esc(SC.t('card.avgReal', { range: realRange() })) + '</p>';
+  }
+
   function card(o) {
     return '<article class="card stat-card" aria-labelledby="' + o.id + '-t">' +
       '<h3 class="stat-card__title" id="' + o.id + '-t">' + esc(SC.t(o.key + '.title')) + '</h3>' +
@@ -44,15 +54,25 @@
     var soilAvgOld = avg(c.soil.old), soilAvgNew = avg(c.soil.recent);
     var vegAvgOld = avg(c.ndvi.old), vegAvgNew = avg(c.ndvi.recent);
     var html = '';
-    var realT = c.provenance.temp === 'nasa', realR = c.provenance.rain === 'nasa';
-    html += card({ id: 'c-temp', key: 'card.temp', real: realT, param: 'T2M',
-      value: SC.t('card.temp.value', { n: SC.num(c.meanTemp.recent, { decimals: 1 }) }),
-      change: changeHtml(c.meanTemp.recent - c.meanTemp.old, 'unit.c', 1, 'bad'),
-      extra: SC.t('card.temp.extra', { n: SC.num(c.hotDays.recent) }) });
-    html += card({ id: 'c-rain', key: 'card.rain', real: realR, param: 'PRECTOTCORR',
-      value: SC.t('card.rain.value', { n: SC.num(c.rain.recent, { group: true }) }),
-      change: changeHtml(c.rain.recent - c.rain.old, 'unit.mm', 0, 'neutral'),
-      extra: SC.t('card.rain.extra', { date: SC.dayOfYear(c.onset.recent) }) });
+    var r = c.real;
+    html += card(r
+      ? { id: 'c-temp', key: 'card.temp', real: true, param: 'T2M',
+          value: SC.t('card.temp.value', { n: SC.num(r.meanTemp, { decimals: 1 }) }),
+          change: avgHtml(),
+          extra: SC.t('card.temp.extra', { n: SC.num(r.hotDays) }) }
+      : { id: 'c-temp', key: 'card.temp',
+          value: SC.t('card.temp.value', { n: SC.num(c.meanTemp.recent, { decimals: 1 }) }),
+          change: changeHtml(c.meanTemp.recent - c.meanTemp.old, 'unit.c', 1, 'bad'),
+          extra: SC.t('card.temp.extra', { n: SC.num(c.hotDays.recent) }) });
+    html += card(r
+      ? { id: 'c-rain', key: 'card.rain', real: true, param: 'PRECTOTCORR',
+          value: SC.t('card.rain.value', { n: SC.num(r.rain, { group: true }) }),
+          change: avgHtml(),
+          extra: SC.t('card.rain.extra', { date: SC.dayOfYear(r.onset) }) }
+      : { id: 'c-rain', key: 'card.rain',
+          value: SC.t('card.rain.value', { n: SC.num(c.rain.recent, { group: true }) }),
+          change: changeHtml(c.rain.recent - c.rain.old, 'unit.mm', 0, 'neutral'),
+          extra: SC.t('card.rain.extra', { date: SC.dayOfYear(c.onset.recent) }) });
     html += card({ id: 'c-soil', key: 'card.soil',
       value: SC.t('card.soil.value', { n: SC.num(soilAvgNew) }),
       change: changeHtml(soilAvgNew - soilAvgOld, 'unit.index', 0, 'good'),
@@ -79,16 +99,22 @@
     var allDays = [win.old[0], win.old[1], win.recent[0], win.recent[1]];
 
     function mk(o) { o.thenRange = oldR; o.nowRange = newR; return SC.charts.barChart(o); }
-    var tSrc = c.provenance.temp === 'nasa' ? 'nasa' : 'demo', rSrc = c.provenance.rain === 'nasa' ? 'nasa' : 'demo';
-    var defs = (SC.nasaPower && SC.nasaPower.definitions) || {};
+    var r = c.real, defs = (SC.nasaPower && SC.nasaPower.definitions) || {};
 
     var summary = [];
-    var hd = c.hotDays.recent - c.hotDays.old;
-    summary.push(SC.t('shift.sum.hot', { old: SC.num(c.hotDays.old), recent: SC.num(c.hotDays.recent), diff: SC.num(Math.abs(hd)), dir: SC.t(hd >= 0 ? 'dir.more' : 'dir.less') }));
-    var rd = c.rain.recent - c.rain.old;
-    summary.push(SC.t('shift.sum.rain', { old: SC.num(c.rain.old, { group: true }), recent: SC.num(c.rain.recent, { group: true }), diff: SC.num(Math.abs(rd), { group: true }), dir: SC.t(rd >= 0 ? 'dir.more' : 'dir.less') }));
-    var od = c.onset.recent - c.onset.old;
-    summary.push(SC.t('shift.sum.onset', { old: SC.dayOfYear(c.onset.old), recent: SC.dayOfYear(c.onset.recent), diff: SC.num(Math.abs(od)), dir: SC.t(od >= 0 ? 'dir.later' : 'dir.earlier') }));
+    if (r) {
+      var rr = realRange();
+      summary.push(SC.t('shift.sum.hotReal', { range: rr, n: SC.num(r.hotDays) }));
+      summary.push(SC.t('shift.sum.rainReal', { range: rr, n: SC.num(r.rain, { group: true }) }));
+      summary.push(SC.t('shift.sum.onsetReal', { range: rr, date: SC.dayOfYear(r.onset) }));
+    } else {
+      var hd = c.hotDays.recent - c.hotDays.old;
+      summary.push(SC.t('shift.sum.hot', { old: SC.num(c.hotDays.old), recent: SC.num(c.hotDays.recent), diff: SC.num(Math.abs(hd)), dir: SC.t(hd >= 0 ? 'dir.more' : 'dir.less') }));
+      var rd = c.rain.recent - c.rain.old;
+      summary.push(SC.t('shift.sum.rain', { old: SC.num(c.rain.old, { group: true }), recent: SC.num(c.rain.recent, { group: true }), diff: SC.num(Math.abs(rd), { group: true }), dir: SC.t(rd >= 0 ? 'dir.more' : 'dir.less') }));
+      var od = c.onset.recent - c.onset.old;
+      summary.push(SC.t('shift.sum.onset', { old: SC.dayOfYear(c.onset.old), recent: SC.dayOfYear(c.onset.recent), diff: SC.num(Math.abs(od)), dir: SC.t(od >= 0 ? 'dir.later' : 'dir.earlier') }));
+    }
     summary.push(win.shiftDays === 0
       ? SC.t('shift.sum.windowSame', { crop: cropName })
       : SC.t('shift.sum.window', { crop: cropName, diff: SC.num(Math.abs(win.shiftDays)), dir: SC.t(win.shiftDays > 0 ? 'dir.later' : 'dir.earlier') }));
@@ -97,18 +123,28 @@
     html += '<div class="card span-2"><h3>' + esc(SC.t('shift.summary')) + '</h3><ul class="summary-list">' +
       summary.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul></div>';
 
-    html += '<div class="card">' + mk({ id: 'ch-hot', source: tSrc, title: SC.t('chart.hot.title'), desc: tSrc === 'nasa' ? SC.t('chart.hot.descReal', { t: SC.num(defs.hotC) }) : SC.t('chart.hot.desc'),
-      rows: [{ label: SC.t('card.temp.title'), old: c.hotDays.old, recent: c.hotDays.recent }],
-      min: 0, max: Math.max(c.hotDays.old, c.hotDays.recent) * 1.15, fmt: daysFmt }) + '</div>';
-
-    html += '<div class="card">' + mk({ id: 'ch-onset', source: rSrc, title: SC.t('chart.onset.title'), desc: rSrc === 'nasa' ? SC.t('chart.onset.descReal', { mm: SC.num(defs.onsetMm) }) : SC.t('chart.onset.desc'),
-      rows: [{ label: SC.t('card.rain.title'), old: c.onset.old, recent: c.onset.recent }],
-      min: 90, max: 240,
-      fmt: function (v) { return SC.dayOfYear(v); } }) + '</div>';
-
-    html += '<div class="card span-2">' + mk({ id: 'ch-rain', source: rSrc, title: SC.t('chart.rain.title'), desc: rSrc === 'nasa' ? SC.t('chart.rain.descReal') : SC.t('chart.rain.desc'),
-      rows: c.monthlyRain.old.map(function (v, i) { return { label: SC.month(i), old: v, recent: c.monthlyRain.recent[i] }; }),
-      min: 0, max: Math.max.apply(null, c.monthlyRain.old.concat(c.monthlyRain.recent)) * 1.1, fmt: mmFmt }) + '</div>';
+    /* Real data: one "average" bar per row, no earlier period. Demo data: then vs now. */
+    function mkReal(o) { o.single = true; o.source = 'nasa'; o.nowRange = realRange(); return SC.charts.barChart(o); }
+    var onsetFmt = function (v) { return SC.dayOfYear(v); };
+    if (r) {
+      html += '<div class="card">' + mkReal({ id: 'ch-hot', title: SC.t('chart.hot.title'), desc: SC.t('chart.hot.descReal', { t: SC.num(defs.hotC) }),
+        rows: [{ label: SC.t('card.temp.title'), recent: r.hotDays }],
+        min: 0, max: Math.max(1, r.hotDays) * 1.15, fmt: daysFmt }) + '</div>';
+      html += '<div class="card">' + mkReal({ id: 'ch-onset', title: SC.t('chart.onset.title'), desc: SC.t('chart.onset.descReal', { mm: SC.num(defs.onsetMm) }),
+        rows: [{ label: SC.t('card.rain.title'), recent: r.onset }], min: 90, max: 240, fmt: onsetFmt }) + '</div>';
+      html += '<div class="card span-2">' + mkReal({ id: 'ch-rain', title: SC.t('chart.rain.title'), desc: SC.t('chart.rain.descReal'),
+        rows: r.monthlyRain.map(function (v, i) { return { label: SC.month(i), recent: v }; }),
+        min: 0, max: Math.max(1, Math.max.apply(null, r.monthlyRain)) * 1.1, fmt: mmFmt }) + '</div>';
+    } else {
+      html += '<div class="card">' + mk({ id: 'ch-hot', source: 'demo', title: SC.t('chart.hot.title'), desc: SC.t('chart.hot.desc'),
+        rows: [{ label: SC.t('card.temp.title'), old: c.hotDays.old, recent: c.hotDays.recent }],
+        min: 0, max: Math.max(c.hotDays.old, c.hotDays.recent) * 1.15, fmt: daysFmt }) + '</div>';
+      html += '<div class="card">' + mk({ id: 'ch-onset', source: 'demo', title: SC.t('chart.onset.title'), desc: SC.t('chart.onset.desc'),
+        rows: [{ label: SC.t('card.rain.title'), old: c.onset.old, recent: c.onset.recent }], min: 90, max: 240, fmt: onsetFmt }) + '</div>';
+      html += '<div class="card span-2">' + mk({ id: 'ch-rain', source: 'demo', title: SC.t('chart.rain.title'), desc: SC.t('chart.rain.desc'),
+        rows: c.monthlyRain.old.map(function (v, i) { return { label: SC.month(i), old: v, recent: c.monthlyRain.recent[i] }; }),
+        min: 0, max: Math.max.apply(null, c.monthlyRain.old.concat(c.monthlyRain.recent)) * 1.1, fmt: mmFmt }) + '</div>';
+    }
 
     html += '<div class="card">' + mk({ id: 'ch-soil', source: 'demo', title: SC.t('chart.soil.title'), desc: SC.t('chart.soil.desc'),
       rows: seasons.map(function (s, i) { return { label: SC.t('season.' + s), old: c.soil.old[i], recent: c.soil.recent[i] }; }),

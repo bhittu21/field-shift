@@ -55,11 +55,16 @@
         dataStatus: 'synthetic',
         provenance: { temp: 'demo', rain: 'demo', soil: 'demo', ndvi: 'demo' }
       };
-      /* Overlay real NASA POWER values (temperature, hot days, rain, onset) when the data file is present and complete. */
+      /*
+       * Real NASA POWER values are attached SEPARATELY as `out.real` (single averages over SC.nasaPower.period).
+       * They are never mixed into the demo then/now pairs above: there is no real earlier period, and the demo
+       * series still feed the clearly labelled demo features (rotation scoring, message mock-ups).
+       */
       var n = SC.hasRealData() && SC.nasaPower.districts[districtId];
-      if (n && n.meanTemp && n.hotDays && n.rain && n.onset && n.monthlyRain) {
-        out.meanTemp = n.meanTemp; out.hotDays = n.hotDays; out.rain = n.rain;
-        out.onset = n.onset; out.monthlyRain = n.monthlyRain;
+      var isNum = function (v) { return typeof v === 'number' && isFinite(v); };
+      if (n && isNum(n.meanTemp) && isNum(n.hotDays) && isNum(n.rain) && isNum(n.onset) &&
+          Array.isArray(n.monthlyRain) && n.monthlyRain.length === 12) {
+        out.real = { meanTemp: n.meanTemp, hotDays: n.hotDays, rain: n.rain, onset: n.onset, monthlyRain: n.monthlyRain };
         out.provenance.temp = 'nasa'; out.provenance.rain = 'nasa';
         out.dataStatus = 'mixed';
       }

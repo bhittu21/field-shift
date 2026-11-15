@@ -1,15 +1,19 @@
 """Interaction checks. Usage: python3 tests/interactions.py"""
+import pathlib
 import os, sys
 from playwright.sync_api import sync_playwright
-URL = 'file://' + os.path.abspath('index.html')
+URL = pathlib.Path('index.html').resolve().as_uri()
 fails = []
 def check(name, cond):
     print(('PASS ' if cond else 'FAIL ') + name)
     if not cond: fails.append(name)
 
 with sync_playwright() as p:
-    b = p.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox'])
+    b = p.chromium.launch(executable_path=os.environ.get('CHROME_PATH') or ('/usr/bin/google-chrome' if os.path.exists('/usr/bin/google-chrome') else None), args=['--no-sandbox'])
     ctx = b.new_context(viewport={'width': 390, 'height': 800})
+    # These checks assert the synthetic demo values, so keep src/data/nasa-power.js from loading real data.
+    # Real-data wiring is covered by tests/real_mode.py.
+    ctx.add_init_script("window.SC = window.SC || {}; Object.defineProperty(window.SC, 'nasaPower', { get: function () { return null; }, set: function () {}, configurable: true });")
     pg = ctx.new_page(); errs = []
     pg.on('pageerror', lambda e: errs.append(str(e)))
     pg.goto(URL)

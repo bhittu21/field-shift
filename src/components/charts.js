@@ -17,21 +17,25 @@
    * Draws one group per row, two bars each (then = striped, now = solid).
    */
   function barChart(o) {
-    var min = o.min || 0, max = o.max;
+    /* o.single: one series only (rows carry `recent`, no `old`). Used for real data that has no earlier period. */
+    var min = o.min || 0, max = o.max, single = !!o.single;
     var thenTxt = SC.t('shift.thenFull', { range: o.thenRange });
-    var nowTxt = SC.t('shift.nowFull', { range: o.nowRange });
+    var nowTxt = single ? SC.t('chart.avgFull', { range: o.nowRange }) : SC.t('shift.nowFull', { range: o.nowRange });
     var html = '<figure class="chart" aria-labelledby="' + o.id + '-cap">';
     html += '<figcaption id="' + o.id + '-cap"><h4 class="chart__title">' + esc(o.title) + '</h4><p class="chart__desc">' + esc(o.desc) + '</p>' + badge(o.source) + '</figcaption>';
-    html += '<ul class="chart__legend" aria-hidden="true"><li><span class="swatch swatch--then"></span>' + esc(thenTxt) + '</li><li><span class="swatch swatch--now"></span>' + esc(nowTxt) + '</li></ul>';
+    html += '<ul class="chart__legend" aria-hidden="true">' +
+      (single ? '' : '<li><span class="swatch swatch--then"></span>' + esc(thenTxt) + '</li>') +
+      '<li><span class="swatch swatch--now"></span>' + esc(nowTxt) + '</li></ul>';
     html += '<div class="chart__plot" aria-hidden="true">';
     o.rows.forEach(function (r) {
       html += '<div class="cgroup"><div class="cgroup__label">' + esc(r.label) + '</div><div class="cgroup__bars">' +
-        bar('then', r.old, min, max, o.fmt) + bar('now', r.recent, min, max, o.fmt) + '</div></div>';
+        (single ? '' : bar('then', r.old, min, max, o.fmt)) + bar('now', r.recent, min, max, o.fmt) + '</div></div>';
     });
     html += '</div>';
-    html += '<div class="sr-only"><table><caption>' + esc(o.title) + '</caption><thead><tr><th scope="col">' + SC.t('chart.table.group') + '</th><th scope="col">' + esc(thenTxt) + '</th><th scope="col">' + esc(nowTxt) + '</th></tr></thead><tbody>';
+    html += '<div class="sr-only"><table><caption>' + esc(o.title) + '</caption><thead><tr><th scope="col">' + SC.t('chart.table.group') + '</th>' +
+      (single ? '' : '<th scope="col">' + esc(thenTxt) + '</th>') + '<th scope="col">' + esc(nowTxt) + '</th></tr></thead><tbody>';
     o.rows.forEach(function (r) {
-      html += '<tr><th scope="row">' + esc(r.label) + '</th><td>' + esc(o.fmt(r.old)) + '</td><td>' + esc(o.fmt(r.recent)) + '</td></tr>';
+      html += '<tr><th scope="row">' + esc(r.label) + '</th>' + (single ? '' : '<td>' + esc(o.fmt(r.old)) + '</td>') + '<td>' + esc(o.fmt(r.recent)) + '</td></tr>';
     });
     html += '</tbody></table></div></figure>';
     return html;
