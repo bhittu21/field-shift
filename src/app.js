@@ -1,5 +1,5 @@
 /*
- * SowCast app shell: state, translation of static markup, navigation, section registry.
+ * Amar Foshol (আমার ফসল) app shell: state, translation of static markup, navigation, section registry.
  * No framework, no build step. Open index.html directly or serve the folder.
  */
 (function (SC) {
@@ -41,7 +41,7 @@
         el.setAttribute(pair.slice(0, i).trim(), SC.t(pair.slice(i + 1).trim()));
       });
     });
-    document.title = 'SowCast: ' + SC.t('brand.tagline');
+    document.title = SC.t('brand.name') + ': ' + SC.t('brand.tagline');
     document.getElementById('lang-bn').setAttribute('aria-pressed', String(SC.getLang() === 'bn'));
     document.getElementById('lang-en').setAttribute('aria-pressed', String(SC.getLang() === 'en'));
     [1, 2, 3].forEach(function (n) {

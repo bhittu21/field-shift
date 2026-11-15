@@ -1,11 +1,11 @@
-# SowCast
+# Amar Foshol (আমার ফসল)
 
 **Bilingual (Bangla / English) crop-rotation and climate-shift decision-support demo for farmers in Bangladesh.**
-Built for the NASA Space Apps Challenge 2026.
+Built for the NASA Space Apps Challenge 2026 (challenge: "SowCast: Adapting Farms with NASA Data").
 
 > **Demo mode.** Every number in this app is synthetic and illustrative. Nothing is retrieved from NASA or any other source,
 > there are no research citations, and the rotation scoring is a demonstration heuristic, not a validated model.
-> SowCast supports farmer judgment. It does not replace local agricultural experts.
+> Amar Foshol supports farmer judgment. It does not replace local agricultural experts.
 
 ## What it does
 
