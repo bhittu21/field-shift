@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="src/styles/base.css">
   <link rel="stylesheet" href="src/styles/components.css">
   <link rel="stylesheet" href="src/styles/layout.css">
+  <link rel="stylesheet" href="src/styles/charts.css">
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skip"></a>
@@ -102,6 +103,24 @@
       </div>
     </section>
 
+    <section class="section" id="climate" data-nav="nav.climate" aria-labelledby="climate-title">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__eyebrow" data-i18n="climate.eyebrow"></span>
+          <h2 id="climate-title" data-i18n="climate.title"></h2>
+          <p class="section__lead" id="climate-lead"></p>
+        </div>
+        <div class="notice" role="note"><span aria-hidden="true">!</span><p data-i18n="climate.demoNotice"></p></div>
+        <div class="grid" id="climate-cards" data-section-host="climate" style="margin-top:var(--s-4)"></div>
+
+        <div class="section__head" style="margin-top:var(--s-6)">
+          <h2 id="shift-title" data-i18n="shift.title"></h2>
+          <p class="section__lead" id="shift-lead"></p>
+        </div>
+        <div class="shift-grid" id="climate-shift"></div>
+      </div>
+    </section>
+
     <!-- Further sections (climate, rotation, sources, messaging, about) are added by later milestones. -->
   </main>
 
@@ -124,8 +143,11 @@
   <script src="src/utils/i18n.js"></script>
   <script src="src/data/provider.js"></script>
   <script src="src/translations/common.js"></script>
+  <script src="src/translations/climate.js"></script>
+  <script src="src/components/charts.js"></script>
   <script src="src/app.js"></script>
   <script src="src/sections/dashboard.js"></script>
+  <script src="src/sections/climate.js"></script>
   <script src="src/sections/footer.js"></script>
 </body>
 </html>
