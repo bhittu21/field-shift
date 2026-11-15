@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SowCast
 
 **Bilingual (Bangla / English) crop-rotation and climate-shift decision-support demo for farmers in Bangladesh.**
@@ -74,6 +75,9 @@ python3 tests/interactions.py            # language, selectors, charts, prioriti
 
 # Space Apps (original repository README)
 
+=======
+# Space Apps
+>>>>>>> c84cd8031d880947633610e8b58c006c12ab4595
 ## SOLVE REAL-WORLD CHALLENGES ON EARTH & IN SPACE
 The NASA Space Apps Challenge is a hackathon for coders, scientists, designers, storytellers, makers, technologists, and innovators around the world to come together and use open data from NASA and its Space Agency Partners to create solutions to challenges we face on Earth and in space.
 
