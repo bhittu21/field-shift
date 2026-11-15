@@ -28,7 +28,7 @@
       'hero.text': 'নাসার পৃথিবী পর্যবেক্ষণ তথ্যের মাধ্যমে আবহাওয়া, মাটির অবস্থা এবং ফসল আবর্তনের সম্ভাবনা বুঝুন।',
       'hero.ctaPrimary': 'বিশ্লেষণ শুরু করুন',
       'hero.ctaSecondary': 'কীভাবে কাজ করে',
-      'hero.flagLabel': 'সবুজ মাঠ ও লাল সূর্যের প্রতীকী চিত্র',
+      'hero.imageLabel': 'স্মার্ট কৃষির প্রতীকী চিত্র: উপগ্রহ, মাঠের সেন্সর ও সবুজ ফসলের সারি',
 
       'how.eyebrow': 'কীভাবে কাজ করে',
       'how.title': 'তিনটি সহজ ধাপ',
@@ -118,7 +118,7 @@
       'hero.text': 'Use NASA Earth observation data to understand weather, soil conditions, and crop rotation possibilities.',
       'hero.ctaPrimary': 'Start exploring',
       'hero.ctaSecondary': 'How it works',
-      'hero.flagLabel': 'Symbolic picture of a green field and a red sun',
+      'hero.imageLabel': 'Symbolic smart farming picture: a satellite, a field sensor, and green crop rows',
 
       'how.eyebrow': 'How it works',
       'how.title': 'Three simple steps',

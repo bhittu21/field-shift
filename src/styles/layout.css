@@ -41,11 +41,11 @@
 .hero__lead { font-size: clamp(1.0625rem, 1rem + 0.5vw, 1.25rem); color: #E4F0EA; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-5); }
 .hero .badge--demo { background: rgba(255, 255, 255, 0.12); color: #fff; border-color: rgba(255, 255, 255, 0.4); }
-.hero__flag { display: none; }
+.hero__art { display: none; }
 @media (min-width: 768px) { .hero { padding-block: var(--s-7); } }
 @media (min-width: 960px) {
   .hero__grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
-  .hero__flag { display: block; justify-self: center; width: min(100%, 320px); }
+  .hero__art { display: block; justify-self: center; width: min(100%, 320px); }
 }
 
 /* ---------- How it works ---------- */

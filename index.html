@@ -55,11 +55,33 @@
             <a class="btn btn--secondary" href="#how" data-i18n="hero.ctaSecondary"></a>
           </div>
         </div>
-        <svg class="hero__flag" viewBox="0 0 320 210" role="img" data-i18n-attr="aria-label:hero.flagLabel" focusable="false">
-          <rect width="320" height="210" rx="16" fill="#006A4E"/>
-          <circle cx="150" cy="100" r="58" fill="#F42A41"/>
-          <path d="M0 178c50-18 100-18 160 0s110 18 160 0v32H0z" fill="#004D39"/>
-          <path d="M40 190v-26M60 190v-34M80 190v-22M240 190v-30M260 190v-24M280 190v-32" stroke="#E4F0EA" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <svg class="hero__art" viewBox="0 0 320 210" role="img" data-i18n-attr="aria-label:hero.imageLabel" focusable="false">
+          <defs>
+            <clipPath id="hero-art-clip"><rect width="320" height="210" rx="16"/></clipPath>
+            <g id="hero-sprout"><path d="M0 0v-9" stroke="#E4F0EA" stroke-width="2" stroke-linecap="round"/><path d="M0-6c-7-1-9-7-7-11 6 0 9 4 7 11z" fill="#9FD3BE"/><path d="M0-8c6-1 8-6 6-10-5 0-8 4-6 10z" fill="#E4F0EA"/></g>
+          </defs>
+          <g clip-path="url(#hero-art-clip)">
+            <rect width="320" height="210" fill="#006A4E"/>
+            <circle cx="268" cy="42" r="20" fill="#F42A41"/>
+            <g transform="rotate(-25 70 48)">
+              <rect x="58" y="40" width="24" height="16" rx="3" fill="#E4F0EA"/>
+              <rect x="26" y="43" width="28" height="10" rx="2" fill="#9FD3BE"/>
+              <rect x="86" y="43" width="28" height="10" rx="2" fill="#9FD3BE"/>
+              <path d="M40 43v10M48 43v10M100 43v10M108 43v10" stroke="#006A4E" stroke-width="1.5"/>
+            </g>
+            <path d="M82 66L148 104" stroke="#E4F0EA" stroke-width="2" stroke-dasharray="4 6" stroke-linecap="round" fill="none"/>
+            <rect y="120" width="320" height="90" fill="#00382A"/>
+            <g stroke="#2FA37F" stroke-width="3" stroke-linecap="round" fill="none">
+              <path d="M160 120L-30 210M160 120L30 210M160 120L100 210M160 120L160 210M160 120L220 210M160 120L290 210M160 120L350 210"/>
+            </g>
+            <use href="#hero-sprout" x="128" y="140"/><use href="#hero-sprout" x="192" y="140"/>
+            <use href="#hero-sprout" x="96" y="166"/><use href="#hero-sprout" x="224" y="166"/>
+            <use href="#hero-sprout" x="52" y="196"/><use href="#hero-sprout" x="268" y="196"/>
+            <path d="M160 112v42" stroke="#E4F0EA" stroke-width="3" stroke-linecap="round"/>
+            <rect x="148" y="96" width="24" height="16" rx="3" fill="#E4F0EA"/>
+            <circle cx="160" cy="104" r="3.5" fill="#F42A41"/>
+            <path d="M149 90a16 16 0 0 1 22 0M143 84a25 25 0 0 1 34 0" stroke="#E4F0EA" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          </g>
         </svg>
       </div>
     </section>
