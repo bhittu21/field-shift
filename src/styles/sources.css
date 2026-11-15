@@ -1,0 +1,35 @@
+/* ---------- Data sources ---------- */
+.src-group { margin: var(--s-6) 0 var(--s-3); }
+.src-group:first-child { margin-top: 0; }
+.src-grid { align-items: stretch; }
+.src-card { display: flex; flex-direction: column; gap: var(--s-1); }
+.src-card p { margin: 0 0 var(--s-2); }
+.src-card__head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--s-2); margin-bottom: var(--s-2); }
+.src-card__head h4 { margin: 0; font-size: 1.05rem; }
+.src-card__note { padding: var(--s-2) var(--s-3); background: #F1F4F2; border-radius: var(--r-sm); font-size: 0.9rem; }
+.src-card__link { margin-top: auto !important; }
+.src-card__link a { display: inline-flex; align-items: center; min-height: var(--tap); }
+
+/* ---------- Messaging mock-ups ---------- */
+.msg-grid { display: grid; gap: var(--s-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
+.msg-col { min-width: 0; }
+.phone { width: 100%; max-width: 360px; margin-inline: auto; background: #1B2420; border: 8px solid #1B2420; border-radius: 28px; overflow: hidden; }
+.phone__bar { display: flex; align-items: center; gap: var(--s-2); padding: var(--s-3); background: var(--green-dark); color: #fff; }
+.phone__bar--sms { background: #3C4A43; }
+.phone__avatar { flex: none; display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #fff; color: var(--green-dark); font-weight: 800; }
+.phone__name { font-weight: 700; min-width: 0; }
+.phone__body { display: grid; gap: var(--s-2); padding: var(--s-3); background: #E9EFEA; min-height: 280px; align-content: start; }
+.phone__body--sms { background: #F4F5F4; }
+.bubble { max-width: 88%; padding: var(--s-2) var(--s-3); border-radius: 12px; font-size: 0.95rem; line-height: 1.6; min-width: 0; }
+.bubble p { margin: 0; }
+.bubble--in { justify-self: start; background: #fff; border-top-left-radius: 2px; }
+.bubble--out { justify-self: end; background: #D5ECDD; border-top-right-radius: 2px; }
+.bubble__time { display: block; margin-top: 2px; text-align: end; font-size: 0.75rem; color: var(--text-2-strong); }
+.phone__input { padding: var(--s-3); background: #fff; color: var(--text-2-strong); font-size: 0.9rem; border-top: 1px solid var(--border); }
+.sms { justify-self: start; max-width: 92%; padding: var(--s-3); background: #fff; border: 1px solid var(--border); border-radius: 12px; font-size: 0.95rem; line-height: 1.6; }
+.sms p { margin: 0; }
+
+/* ---------- About ---------- */
+.about-grid { display: grid; gap: var(--s-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.about-grid > * { min-width: 0; }
+.about-grid h3 { font-size: 1.1rem; }

@@ -1,0 +1,44 @@
+/* SowCast design tokens. One shared system: colour, type, spacing, radii. */
+@font-face {
+  font-family: 'Noto Sans Bengali';
+  src: url('../../assets/fonts/noto-sans-bengali-bengali-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0964-0965, U+0980-09FE, U+200C-200D, U+25CC;
+}
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../../assets/fonts/noto-sans-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --green: #006A4E;
+  --green-dark: #004D39;
+  --green-soft: #E6F1EC;
+  --red: #F42A41;
+  --red-soft: #FDECEE;
+  --red-text: #B3162B;
+  --amber: #F2B705;
+  --amber-soft: #FFF6D6;
+  --amber-text: #7A5A00;
+  --bg: #F7F9F7;
+  --surface: #FFFFFF;
+  --text: #17211D;
+  --text-2: #68766E;
+  --text-2-strong: #4F5C55;
+  --border: #E3EAE5;
+  --old: #9AAFA4;
+
+  --font: 'Noto Sans Bengali', 'Noto Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 72px;
+  --shadow: 0 1px 2px rgba(23, 33, 29, 0.06);
+  --header-h: 64px;
+  --tap: 44px;
+}

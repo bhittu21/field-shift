@@ -1,0 +1,52 @@
+.lvl { display: inline-flex; align-items: center; gap: 6px; padding: 1px 10px; border-radius: 999px; border: 1px solid transparent; font-size: 0.875rem; font-weight: 600; line-height: 1.6; }
+.lvl--good { background: var(--green-soft); color: var(--green-dark); border-color: #A9D2C3; }
+.lvl--medium { background: var(--amber-soft); color: var(--amber-text); border-color: #E8D28A; }
+.lvl--poor { background: var(--red-soft); color: var(--red-text); border-color: #F5B8C0; }
+
+.rot-grid { display: grid; gap: var(--s-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
+.rot-grid > * { min-width: 0; }
+.rot-card { display: flex; flex-direction: column; gap: var(--s-4); }
+.rot-card h4 { margin-bottom: var(--s-2); font-size: 0.95rem; color: var(--green-dark); }
+.rot-card section p, .rot-card section ul { margin-bottom: var(--s-2); }
+.rot-card__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-2); padding-bottom: var(--s-3); border-bottom: 2px solid var(--green); }
+.rot-card__head h3 { margin: 0; }
+.rot-card__foot { margin-top: auto; padding-top: var(--s-3); border-top: 1px solid var(--border); }
+.rot-card__foot p { margin-bottom: var(--s-2); }
+.plain { margin: 0; padding-left: 1.1em; }
+
+.seq { list-style: none; margin: 0 0 var(--s-2); padding: 0; display: grid; gap: var(--s-2); }
+.seq__step { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px var(--s-2); margin: 0; padding: var(--s-2) var(--s-3); background: var(--green-soft); border-radius: var(--r-sm); border-left: 4px solid var(--green); }
+.seq__step--fallow { background: #F1F3F1; border-left-color: var(--old); border-left-style: dashed; }
+.seq__n { font-size: 0.8rem; color: var(--text-2-strong); }
+.seq__crop { font-weight: 700; }
+.seq__season { flex-basis: 100%; font-size: 0.85rem; color: var(--text-2-strong); }
+
+.prio-panel { display: grid; gap: var(--s-4); }
+.fit-list { display: grid; gap: var(--s-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); margin-bottom: var(--s-3); }
+.fit { padding: var(--s-3); border: 1px solid var(--border); border-radius: var(--r-md); min-width: 0; }
+.fit--best { border: 2px solid var(--green); background: #F4FAF7; }
+.fit__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); margin-bottom: var(--s-2); }
+.fit__parts { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-1); font-size: 0.9rem; }
+.fit__parts li { margin: 0; }
+.meter { height: 12px; background: #EEF2EF; border-radius: 6px; margin-bottom: var(--s-1); overflow: hidden; }
+.meter span { display: block; height: 100%; background: var(--green); }
+
+.cmp { width: 100%; border-collapse: collapse; background: var(--surface); }
+.cmp th, .cmp td { padding: var(--s-3); text-align: start; vertical-align: top; border-bottom: 1px solid var(--border); }
+.cmp thead th { background: var(--green-soft); color: var(--green-dark); }
+.cmp tbody th { font-weight: 600; width: 22%; }
+.cmp p { margin: 0 0 var(--s-1); }
+@media (max-width: 767px) {
+  .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display: block; width: 100%; }
+  .cmp thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .cmp tr { margin-bottom: var(--s-4); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .cmp tbody th { width: 100%; background: var(--green-soft); color: var(--green-dark); border-bottom: 0; }
+  .cmp td::before { content: attr(data-label); display: block; margin-bottom: var(--s-1); font-size: 0.85rem; font-weight: 700; color: var(--text-2-strong); }
+  .cmp td:last-child { border-bottom: 0; }
+}
+
+.why-grid { display: grid; gap: var(--s-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); margin-top: var(--s-4); }
+.why { padding: var(--s-4); border: 1px solid var(--border); border-radius: var(--r-md); min-width: 0; }
+.why h4 { color: var(--green-dark); }
+.why--expert { background: var(--amber-soft); border-color: #E8D28A; }
+.why p:last-child, .why ul:last-child { margin-bottom: 0; }
