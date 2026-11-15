@@ -15,7 +15,7 @@ CHECK = """() => {
     const r = el.getBoundingClientRect();
     if (r.width === 0) return;
     if (r.right > vw + 1 && !el.closest('.sr-only')) res.overflow.push(el.tagName + '.' + (el.className && el.className.baseVal === undefined ? el.className : '') + ' right=' + Math.round(r.right));
-    if (el.children.length === 0 && el.textContent.trim() && (el.scrollWidth > el.clientWidth + 1) && cs.overflow !== 'visible') res.overflow.push('clip:' + el.tagName + '.' + el.className);
+    if (!el.closest('.sr-only') && el.children.length === 0 && el.textContent.trim() && (el.scrollWidth > el.clientWidth + 1) && cs.overflow !== 'visible') res.overflow.push('clip:' + el.tagName + '.' + el.className);
   });
   res.overflow = res.overflow.slice(0, 12);
   return res;

@@ -132,7 +132,7 @@
    */
   var ROTATIONS = {
     boro:    { existing: ['boro', 'fallow', 'aman'],     legume: ['boro', 'mung', 'aman'],       water: ['mustard', 'mung', 'aman'] },
-    aman:    { existing: ['aman', 'fallow', 'boro'],     legume: ['aman', 'lentil', 'mung'],     water: ['aman', 'mustard', 'mung'] },
+    aman:    { existing: ['aman', 'fallow', 'boro'],     legume: ['aman', 'lentil', 'mung'],     water: ['aman', 'mustard', 'fallow'] },
     wheat:   { existing: ['wheat', 'fallow', 'aman'],    legume: ['wheat', 'mung', 'aman'],      water: ['wheat', 'mung', 'fallow'] },
     mustard: { existing: ['mustard', 'fallow', 'aman'],  legume: ['mustard', 'mung', 'aman'],    water: ['mustard', 'mung', 'fallow'] },
     lentil:  { existing: ['lentil', 'fallow', 'aman'],   legume: ['lentil', 'aman', 'mustard'],  water: ['lentil', 'mustard', 'fallow'] },
