@@ -31,7 +31,7 @@ with sync_playwright() as p:
             errs = []
             page.on('pageerror', lambda e: errs.append(str(e)))
             page.on('console', lambda m: errs.append(m.text) if m.type in ('error', 'warning') else None)
-            page.add_init_script("localStorage.setItem('sowcast.lang','%s')" % lang)
+            page.add_init_script("localStorage.setItem('amarfoshol.lang','%s')" % lang)
             page.goto('file://' + os.path.abspath('index.html'))
             page.wait_for_timeout(400)
             r = page.evaluate(CHECK)

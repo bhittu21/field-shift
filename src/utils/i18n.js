@@ -6,7 +6,7 @@
   'use strict';
 
   var DEFAULT_LANG = 'bn';
-  var STORAGE_KEY = 'sowcast.lang';
+  var STORAGE_KEY = 'amarfoshol.lang';
   var strings = { bn: {}, en: {} };
   var BN_DIGITS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
   var MONTHS = {

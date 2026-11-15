@@ -61,8 +61,8 @@
 
     /* Preferences. localStorage only; failure is non-fatal. */
     prefs: {
-      get: function (key) { try { return window.localStorage.getItem('sowcast.' + key); } catch (e) { return null; } },
-      set: function (key, v) { try { window.localStorage.setItem('sowcast.' + key, v); } catch (e) { /* ignore */ } }
+      get: function (key) { try { return window.localStorage.getItem('amarfoshol.' + key); } catch (e) { return null; } },
+      set: function (key, v) { try { window.localStorage.setItem('amarfoshol.' + key, v); } catch (e) { /* ignore */ } }
     }
   };
 

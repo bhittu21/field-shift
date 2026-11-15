@@ -1,7 +1,7 @@
 # Amar Foshol (আমার ফসল)
 
 **Bilingual (Bangla / English) crop-rotation and climate-shift decision-support demo for farmers in Bangladesh.**
-Built for the NASA Space Apps Challenge 2026 (challenge: "SowCast: Adapting Farms with NASA Data").
+Built for the NASA Space Apps Challenge 2026 (challenge theme: adapting farms with NASA data).
 
 > **Demo mode.** Every number in this app is synthetic and illustrative. Nothing is retrieved from NASA or any other source,
 > there are no research citations, and the rotation scoring is a demonstration heuristic, not a validated model.
