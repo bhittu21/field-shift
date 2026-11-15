@@ -47,7 +47,7 @@
     <section class="hero on-dark" id="home" data-nav="nav.home" aria-labelledby="hero-title">
       <div class="container hero__grid">
         <div class="hero__text">
-          <p><span class="badge badge--demo" data-i18n="demo.badge" data-i18n-attr="title:demo.hint"></span></p>
+          <p><span class="badge badge--demo" data-i18n="demo.badge" data-i18n-real="demo.badgeReal" data-i18n-attr="title:demo.hint" data-i18n-attr-real="title:demo.hintReal"></span></p>
           <h1 id="hero-title" data-i18n="hero.title"></h1>
           <p class="hero__lead" data-i18n="hero.text"></p>
           <div class="hero__cta">
@@ -121,7 +121,7 @@
           </div>
           <div class="dashboard__summary">
             <p class="muted" id="dash-summary" aria-live="polite"></p>
-            <p class="small muted" data-i18n="dash.hint"></p>
+            <p class="small muted" data-i18n="dash.hint" data-i18n-real="dash.hintReal"></p>
           </div>
         </div>
       </div>
@@ -134,7 +134,7 @@
           <h2 id="climate-title" data-i18n="climate.title"></h2>
           <p class="section__lead" id="climate-lead"></p>
         </div>
-        <div class="notice" role="note"><span aria-hidden="true">!</span><p data-i18n="climate.demoNotice"></p></div>
+        <div class="notice" role="note"><span aria-hidden="true">!</span><p data-i18n="climate.demoNotice" data-i18n-real="climate.noticeReal"></p></div>
         <div class="grid" id="climate-cards" data-section-host="climate" style="margin-top:var(--s-4)"></div>
 
         <div class="section__head" style="margin-top:var(--s-6)">
@@ -182,9 +182,9 @@
         <div class="section__head">
           <span class="section__eyebrow" data-i18n="src.eyebrow"></span>
           <h2 id="src-title" data-i18n="src.title"></h2>
-          <p class="section__lead" data-i18n="src.lead"></p>
+          <p class="section__lead" data-i18n="src.lead" data-i18n-real="src.leadReal"></p>
         </div>
-        <div class="notice" role="note"><span aria-hidden="true">!</span><p data-i18n="src.honesty"></p></div>
+        <div class="notice" role="note"><span aria-hidden="true">!</span><p data-i18n="src.honesty" data-i18n-real="src.honestyReal"></p></div>
         <div class="notice notice--info" role="note" style="margin-top:var(--s-3)"><span aria-hidden="true">i</span><div><p><strong data-i18n="src.usTitle"></strong></p><p data-i18n="src.usText"></p></div></div>
         <div id="sources-list" data-section-host="sources" style="margin-top:var(--s-5)"></div>
       </div>
@@ -211,7 +211,7 @@
         <div class="about-grid">
           <article class="card"><h3 data-i18n="about.mission.title"></h3><p data-i18n="about.mission.text"></p></article>
           <article class="card"><h3 data-i18n="about.challenge.title"></h3><p data-i18n="about.challenge.text"></p></article>
-          <article class="card"><h3 data-i18n="about.data.title"></h3><p data-i18n="about.data.text"></p></article>
+          <article class="card"><h3 data-i18n="about.data.title"></h3><p data-i18n="about.data.text" data-i18n-real="about.dataReal"></p></article>
           <article class="card"><h3 data-i18n="about.limits.title"></h3><p data-i18n="about.limits.text"></p></article>
           <article class="card"><h3 data-i18n="about.expert.title"></h3><p data-i18n="about.expert.text"></p></article>
           <article class="card"><h3 data-i18n="about.tech.title"></h3><p data-i18n="about.tech.text"></p></article>
@@ -238,11 +238,13 @@
 
   <script src="src/data/demo-data.js"></script>
   <script src="src/utils/i18n.js"></script>
+  <script src="src/data/nasa-power.js"></script>
   <script src="src/data/provider.js"></script>
   <script src="src/translations/common.js"></script>
   <script src="src/translations/climate.js"></script>
   <script src="src/translations/rotation.js"></script>
   <script src="src/translations/sources.js"></script>
+  <script src="src/translations/nasa.js"></script>
   <script src="src/components/charts.js"></script>
   <script src="src/utils/scoring.js"></script>
   <script src="src/app.js"></script>

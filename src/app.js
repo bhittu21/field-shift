@@ -34,13 +34,22 @@
 
   /* Translate static markup: data-i18n (text) and data-i18n-attr="attr:key;attr2:key2". */
   function translateStatic() {
-    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = SC.t(el.getAttribute('data-i18n')); });
+    var real = SC.hasRealData();
+    var date = real ? SC.isoDate(SC.nasaPower.retrievedAt) : '';
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      /* data-i18n-real swaps in wording that is only true once real NASA POWER data is loaded. */
+      var key = (real && el.getAttribute('data-i18n-real')) || el.getAttribute('data-i18n');
+      el.textContent = SC.t(key, { date: date });
+    });
     document.querySelectorAll('[data-i18n-attr]').forEach(function (el) {
-      el.getAttribute('data-i18n-attr').split(';').forEach(function (pair) {
+      var spec = (real && el.getAttribute('data-i18n-attr-real')) || el.getAttribute('data-i18n-attr');
+      spec.split(';').forEach(function (pair) {
         var i = pair.indexOf(':');
         el.setAttribute(pair.slice(0, i).trim(), SC.t(pair.slice(i + 1).trim()));
       });
     });
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', SC.t(real ? 'meta.descReal' : 'meta.desc'));
     document.title = SC.t('brand.name') + ': ' + SC.t('brand.tagline');
     document.getElementById('lang-bn').setAttribute('aria-pressed', String(SC.getLang() === 'bn'));
     document.getElementById('lang-en').setAttribute('aria-pressed', String(SC.getLang() === 'en'));

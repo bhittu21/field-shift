@@ -7,6 +7,21 @@ Built for the NASA Space Apps Challenge 2026 (challenge theme: adapting farms wi
 > there are no research citations, and the rotation scoring is a demonstration heuristic, not a validated model.
 > Amar Foshol supports farmer judgment. It does not replace local agricultural experts.
 
+## Real data: NASA POWER (optional, run once)
+
+The temperature and rainfall figures can come from the real NASA POWER daily point API (parameters T2M, T2M_MAX, PRECTOTCORR; community AG). No key is needed.
+
+```
+python scripts/fetch_nasa_power.py
+```
+
+This overwrites `src/data/nasa-power.js` with 1991-2005 vs 2010-2024 summaries for the six district points. Reload the page: the temperature, rain, hot-day and rain-onset cards then carry a "Verified" badge and the retrieval date.
+
+What stays synthetic (and is labelled so): soil moisture, vegetation (NDVI), planting windows and all crop-rotation scenarios. The site is a "partly real" prototype, not a live NASA feed: the data is a file fetched once, not a live connection. "Heavy-rain onset" and "hot day" (>= 35 C) are this project's own definitions, shown in the chart text.
+
+Tests: `python3 tests/test_fetch_nasa_power.py` (offline), `python3 tests/real_mode.py` (UI wiring using an obviously fake fixture).
+
+
 ## What it does
 
 - **Crop Rotation Explorer (primary):** compares three illustrative strategies (existing practice, legume-inclusive, water-conscious)

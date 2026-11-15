@@ -7,6 +7,9 @@
   'use strict';
 
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function badge(kind) {
+    return kind ? '<p class="chart__badge"><span class="badge badge--' + (kind === 'nasa' ? 'verified' : 'demo') + '">' + esc(SC.t(kind === 'nasa' ? 'status.verified' : 'status.demo')) + '</span></p>' : '';
+  }
   function pct(v, min, max) { return Math.max(2, Math.min(100, ((v - min) / (max - min)) * 100)); }
 
   /*
@@ -18,7 +21,7 @@
     var thenTxt = SC.t('shift.thenFull', { range: o.thenRange });
     var nowTxt = SC.t('shift.nowFull', { range: o.nowRange });
     var html = '<figure class="chart" aria-labelledby="' + o.id + '-cap">';
-    html += '<figcaption id="' + o.id + '-cap"><h4 class="chart__title">' + esc(o.title) + '</h4><p class="chart__desc">' + esc(o.desc) + '</p></figcaption>';
+    html += '<figcaption id="' + o.id + '-cap"><h4 class="chart__title">' + esc(o.title) + '</h4><p class="chart__desc">' + esc(o.desc) + '</p>' + badge(o.source) + '</figcaption>';
     html += '<ul class="chart__legend" aria-hidden="true"><li><span class="swatch swatch--then"></span>' + esc(thenTxt) + '</li><li><span class="swatch swatch--now"></span>' + esc(nowTxt) + '</li></ul>';
     html += '<div class="chart__plot" aria-hidden="true">';
     o.rows.forEach(function (r) {
@@ -42,7 +45,7 @@
   /* Range chart: bars positioned on a shared axis. rows: [{label, from, to, kind, text}] */
   function rangeChart(o) {
     var html = '<figure class="chart" aria-labelledby="' + o.id + '-cap">';
-    html += '<figcaption id="' + o.id + '-cap"><h4 class="chart__title">' + esc(o.title) + '</h4><p class="chart__desc">' + esc(o.desc) + '</p></figcaption>';
+    html += '<figcaption id="' + o.id + '-cap"><h4 class="chart__title">' + esc(o.title) + '</h4><p class="chart__desc">' + esc(o.desc) + '</p>' + badge(o.source) + '</figcaption>';
     html += '<div class="chart__plot">';
     o.rows.forEach(function (r) {
       var left = ((r.from - o.min) / (o.max - o.min)) * 100;
