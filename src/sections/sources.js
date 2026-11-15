@@ -6,13 +6,18 @@
 
   function card(s) {
     var id = s.id;
+    var real = SC.hasRealData();
+    var usedKey = real && (id === 'power' || id === 'gpm') ? 'src.' + id + '.usedReal' : 'src.' + id + '.used';
+    var noteHtml = real && id === 'power'
+      ? SC.t('src.note.powerReal', { date: SC.isoDate(SC.nasaPower.retrievedAt) })
+      : SC.t('src.note.' + s.status);
     var html = '<article class="card src-card" aria-labelledby="src-' + id + '">';
     html += '<header class="src-card__head"><h4 id="src-' + id + '">' + esc(SC.t('src.' + id + '.name')) + '</h4>' +
       '<span class="badge badge--' + s.status + '">' + esc(SC.t('status.' + s.status)) + '</span></header>';
     html += '<p><strong>' + esc(SC.t('src.purpose')) + ':</strong> ' + esc(SC.t('src.' + id + '.purpose')) + '</p>';
     html += '<p><strong>' + esc(SC.t('src.shows')) + ':</strong> ' + esc(SC.t('src.' + id + '.shows')) + '</p>';
-    html += '<p><strong>' + esc(SC.t('src.usedIn')) + ':</strong> ' + esc(SC.t('src.' + id + '.used')) + '</p>';
-    html += '<p class="src-card__note">' + esc(SC.t('src.note.' + s.status)) + '</p>';
+    html += '<p><strong>' + esc(SC.t('src.usedIn')) + ':</strong> ' + esc(SC.t(usedKey)) + '</p>';
+    html += '<p class="src-card__note">' + esc(noteHtml) + '</p>';
     if (s.url) html += '<p class="src-card__link"><a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(SC.t('src.link')) + '</a></p>';
     return html + '</article>';
   }

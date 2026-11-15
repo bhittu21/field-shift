@@ -45,3 +45,6 @@
 .rfill.cbar__fill--now { border-color: var(--green-dark); }
 .rtext { font-size: 0.9rem; }
 .table-wrap { overflow-x: auto; }
+
+.chart__badge { margin: 0 0 var(--s-3); }
+.site-footer .badge--verified { background: rgba(255, 255, 255, 0.12); color: #fff; border-color: rgba(255, 255, 255, 0.45); }

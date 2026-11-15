@@ -12,8 +12,14 @@
        add dedicated "connected" strings here instead of reusing the not-connected text. */
     var html = '';
     html += row('notConnected', 'status.notConnected', 'footer.db', 'footer.dbNone');
-    html += row('notConnected', 'status.notConnected', 'footer.nasa', 'footer.nasaNone');
-    html += row('demo', 'status.demo', 'footer.data', 'footer.dataDemo');
+    if (SC.hasRealData()) {
+      html += '<li><span class="badge badge--verified">' + SC.t('status.verified') + '</span><span><strong>' + SC.t('footer.nasaFile') + ':</strong> ' +
+        SC.t('footer.nasaReal', { date: SC.isoDate(SC.nasaPower.retrievedAt) }) + '</span></li>';
+      html += row('demo', 'status.demo', 'footer.data', 'footer.dataMixed');
+    } else {
+      html += row('notConnected', 'status.notConnected', 'footer.nasa', 'footer.nasaNone');
+      html += row('demo', 'status.demo', 'footer.data', 'footer.dataDemo');
+    }
     document.getElementById('footer-status').innerHTML = html;
   }
 

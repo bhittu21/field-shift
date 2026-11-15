@@ -4,7 +4,7 @@
 .site-header__bar .brand { order: 1; }
 .site-header__bar .header-actions { order: 2; }
 .site-header__bar .site-nav { order: 3; flex-basis: 100%; }
-.brand { white-space: nowrap; display: inline-flex; align-items: center; gap: var(--s-2); min-height: var(--tap); color: var(--green-dark); font-weight: 800; font-size: 1.25rem; text-decoration: none; letter-spacing: -0.01em; }
+.brand { white-space: nowrap; display: inline-flex; align-items: center; gap: var(--s-2); min-height: var(--tap); color: var(--green-dark); font-weight: 800; font-size: 1.25rem; text-decoration: none; }
 .brand__mark { flex: none; }
 .header-actions { display: flex; align-items: center; gap: var(--s-2); }
 
@@ -17,7 +17,7 @@
 
 .site-nav { display: none; border-top: 1px solid var(--border); background: var(--surface); }
 .site-nav.is-open { display: block; }
-@media (max-width: 359px) { .brand { font-size: 1.1rem; } .brand__mark { width: 26px; height: 26px; } .lang-switch button { padding: 4px 6px; min-width: 40px; font-size: 0.9rem; } .header-actions { gap: 4px; } }
+@media (max-width: 419px) { .brand { font-size: 1rem; gap: 6px; } .brand__mark { width: 24px; height: 24px; } .lang-switch button { padding: 4px 4px; min-width: 40px; font-size: 0.85rem; } .header-actions { gap: 4px; } .menu-btn { width: 40px; height: 40px; } }
 .site-nav ul { list-style: none; margin: 0; padding: var(--s-2) 0 var(--s-3); }
 .site-nav li { margin: 0; }
 .site-nav a { display: flex; align-items: center; min-height: var(--tap); padding: 8px var(--s-3); color: var(--text); font-weight: 600; text-decoration: none; border-radius: var(--r-sm); }

@@ -1,5 +1,5 @@
 /*
- * SowCast demonstration dataset.
+ * Amar Foshol demonstration dataset.
  *
  * EVERYTHING in this file is SYNTHETIC and ILLUSTRATIVE.
  * It is not measured, not retrieved from NASA, and not agronomic research.

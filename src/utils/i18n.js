@@ -6,7 +6,7 @@
   'use strict';
 
   var DEFAULT_LANG = 'bn';
-  var STORAGE_KEY = 'sowcast.lang';
+  var STORAGE_KEY = 'amarfoshol.lang';
   var strings = { bn: {}, en: {} };
   var BN_DIGITS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
   var MONTHS = {
@@ -63,6 +63,13 @@
     return num(d) + ' ' + month(m);
   }
 
+  /* "2026-11-15" -> "15 November 2026" / "১৫ নভেম্বর ২০২৬" */
+  function isoDate(iso) {
+    var p = String(iso).split('-');
+    if (p.length !== 3) return String(iso);
+    return num(+p[2]) + ' ' + month(+p[1] - 1) + ' ' + num(+p[0]);
+  }
+
   function getLang() { return lang; }
   function setLang(l) {
     if (l !== 'bn' && l !== 'en') return;
@@ -78,6 +85,7 @@
   SC.num = num;
   SC.month = month;
   SC.dayOfYear = dayOfYear;
+  SC.isoDate = isoDate;
   SC.getLang = getLang;
   SC.setLang = setLang;
   SC.initLang = initLang;

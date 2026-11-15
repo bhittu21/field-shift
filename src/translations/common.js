@@ -3,7 +3,7 @@
   'use strict';
   SC.addStrings({
     bn: {
-      'brand.name': 'SowCast',
+      'brand.name': 'আমার ফসল',
       'brand.tagline': 'নাসার তথ্য দিয়ে কৃষির সিদ্ধান্ত',
       'skip': 'মূল অংশে যান',
       'nav.home': 'হোম',
@@ -55,7 +55,7 @@
       'footer.nasaNone': 'সংযুক্ত নেই। কোনো মান নাসা থেকে সংগ্রহ করা হয়নি।',
       'footer.data': 'পরিসংখ্যান',
       'footer.dataDemo': 'সব পরিসংখ্যান কৃত্রিম ডেমো মান।',
-      'footer.disclaimer': 'SowCast কৃষকের সিদ্ধান্তে সহায়তা করে। এটি কৃষি বিশেষজ্ঞের পরামর্শের বিকল্প নয়। সিদ্ধান্তের আগে স্থানীয় কৃষি কর্মকর্তার সঙ্গে কথা বলুন।',
+      'footer.disclaimer': 'আমার ফসল কৃষকের সিদ্ধান্তে সহায়তা করে। এটি কৃষি বিশেষজ্ঞের পরামর্শের বিকল্প নয়। সিদ্ধান্তের আগে স্থানীয় কৃষি কর্মকর্তার সঙ্গে কথা বলুন।',
       'footer.challenge': 'নাসা স্পেস অ্যাপস চ্যালেঞ্জ ২০২৬-এর জন্য তৈরি একটি ডেমো প্রকল্প।',
 
       'status.demo': 'ডেমো তথ্য',
@@ -93,7 +93,7 @@
       'common.noSelection': 'আগে জেলা ও ফসল বাছুন।'
     },
     en: {
-      'brand.name': 'SowCast',
+      'brand.name': 'Amar Foshol',
       'brand.tagline': 'Farm decisions with NASA data',
       'skip': 'Skip to main content',
       'nav.home': 'Home',
@@ -145,7 +145,7 @@
       'footer.nasaNone': 'Not connected. No value shown was retrieved from NASA.',
       'footer.data': 'Statistics',
       'footer.dataDemo': 'All statistics are synthetic demo values.',
-      'footer.disclaimer': 'SowCast supports farmer judgment. It does not replace agricultural experts. Talk to your local agriculture officer before making decisions.',
+      'footer.disclaimer': 'Amar Foshol supports farmer judgment. It does not replace agricultural experts. Talk to your local agriculture officer before making decisions.',
       'footer.challenge': 'A demonstration project built for the NASA Space Apps Challenge 2026.',
 
       'status.demo': 'Demo Data',
